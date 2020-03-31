@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43080A0E32B3E3F0E4682495 /* Pods_SendBirdCombineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1334F9D6273E396902DB55 /* Pods_SendBirdCombineTests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		79C7A867FD0D97C791D84183 /* Pods_SendBirdCombine_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0825E80F2A904CCB29934E /* Pods_SendBirdCombine_Example.framework */; };
-		AD3A2B10A112CAF0F83E8739 /* Pods_SendBirdCombine_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC49AD02FF6958DBACDD48EE /* Pods_SendBirdCombine_Tests.framework */; };
+		9C9F78638C536EED2BC809EB /* Pods_SBCExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6E8DCB91963553A9F6FD5A6 /* Pods_SBCExample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,25 +28,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		34A913E57253CD1B216A3084 /* SendBirdCombine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = SendBirdCombine.podspec; path = ../SendBirdCombine.podspec; sourceTree = "<group>"; };
-		3A0825E80F2A904CCB29934E /* Pods_SendBirdCombine_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SendBirdCombine_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACD01AFB9204008FA782 /* SendBirdCombine_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendBirdCombine_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0403C6682D82453D4ABBF2F7 /* Pods-SendBirdCombineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombineTests.release.xcconfig"; path = "Target Support Files/Pods-SendBirdCombineTests/Pods-SendBirdCombineTests.release.xcconfig"; sourceTree = "<group>"; };
+		2A5C3857150935924C3C3186 /* Pods-SBCExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBCExample.debug.xcconfig"; path = "Target Support Files/Pods-SBCExample/Pods-SBCExample.debug.xcconfig"; sourceTree = "<group>"; };
+		2EC1AABF57A8C2020F6B5CFE /* Pods-SendBirdCombineTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombineTests.debug.xcconfig"; path = "Target Support Files/Pods-SendBirdCombineTests/Pods-SendBirdCombineTests.debug.xcconfig"; sourceTree = "<group>"; };
+		34A913E57253CD1B216A3084 /* SendBirdCombine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SendBirdCombine.podspec; path = ../SendBirdCombine.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		607FACD01AFB9204008FA782 /* SBCExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBCExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* SendBirdCombine_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SendBirdCombine_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACE51AFB9204008FA782 /* SendBirdCombineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SendBirdCombineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		639636D0F7239D515DEEB304 /* Pods-SendBirdCombine_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombine_Example.release.xcconfig"; path = "Target Support Files/Pods-SendBirdCombine_Example/Pods-SendBirdCombine_Example.release.xcconfig"; sourceTree = "<group>"; };
 		914FEBB5A9B91F0616E049C2 /* Pods-SendBirdCombine_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombine_Tests.debug.xcconfig"; path = "Target Support Files/Pods-SendBirdCombine_Tests/Pods-SendBirdCombine_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		AC49AD02FF6958DBACDD48EE /* Pods_SendBirdCombine_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SendBirdCombine_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53E82EC486104AE33E23668 /* Pods-SendBirdCombine_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombine_Tests.release.xcconfig"; path = "Target Support Files/Pods-SendBirdCombine_Tests/Pods-SendBirdCombine_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		BFF003FFA18485F85CDA6359 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		B7134E9047544E527180CBAB /* Pods-SBCExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBCExample.release.xcconfig"; path = "Target Support Files/Pods-SBCExample/Pods-SBCExample.release.xcconfig"; sourceTree = "<group>"; };
+		BFF003FFA18485F85CDA6359 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CB5B0426AA06D24E9D668C23 /* Pods-SendBirdCombine_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombine_Example.debug.xcconfig"; path = "Target Support Files/Pods-SendBirdCombine_Example/Pods-SendBirdCombine_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		EB4C3959EA0636DF2223774E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D6E8DCB91963553A9F6FD5A6 /* Pods_SBCExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SBCExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB4C3959EA0636DF2223774E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		FB1334F9D6273E396902DB55 /* Pods_SendBirdCombineTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SendBirdCombineTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79C7A867FD0D97C791D84183 /* Pods_SendBirdCombine_Example.framework in Frameworks */,
+				9C9F78638C536EED2BC809EB /* Pods_SBCExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD3A2B10A112CAF0F83E8739 /* Pods_SendBirdCombine_Tests.framework in Frameworks */,
+				43080A0E32B3E3F0E4682495 /* Pods_SendBirdCombineTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,8 +76,8 @@
 		2574A63F4626860B4651213B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3A0825E80F2A904CCB29934E /* Pods_SendBirdCombine_Example.framework */,
-				AC49AD02FF6958DBACDD48EE /* Pods_SendBirdCombine_Tests.framework */,
+				D6E8DCB91963553A9F6FD5A6 /* Pods_SBCExample.framework */,
+				FB1334F9D6273E396902DB55 /* Pods_SendBirdCombineTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -85,8 +89,11 @@
 				639636D0F7239D515DEEB304 /* Pods-SendBirdCombine_Example.release.xcconfig */,
 				914FEBB5A9B91F0616E049C2 /* Pods-SendBirdCombine_Tests.debug.xcconfig */,
 				B53E82EC486104AE33E23668 /* Pods-SendBirdCombine_Tests.release.xcconfig */,
+				2A5C3857150935924C3C3186 /* Pods-SBCExample.debug.xcconfig */,
+				B7134E9047544E527180CBAB /* Pods-SBCExample.release.xcconfig */,
+				2EC1AABF57A8C2020F6B5CFE /* Pods-SendBirdCombineTests.debug.xcconfig */,
+				0403C6682D82453D4ABBF2F7 /* Pods-SendBirdCombineTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -105,8 +112,8 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* SendBirdCombine_Example.app */,
-				607FACE51AFB9204008FA782 /* SendBirdCombine_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* SBCExample.app */,
+				607FACE51AFB9204008FA782 /* SendBirdCombineTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,9 +170,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* SendBirdCombine_Example */ = {
+		607FACCF1AFB9204008FA782 /* SBCExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SendBirdCombine_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SBCExample" */;
 			buildPhases = (
 				116C5817B0E138981CC22470 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
@@ -177,14 +184,14 @@
 			);
 			dependencies = (
 			);
-			name = SendBirdCombine_Example;
+			name = SBCExample;
 			productName = SendBirdCombine;
-			productReference = 607FACD01AFB9204008FA782 /* SendBirdCombine_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* SBCExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* SendBirdCombine_Tests */ = {
+		607FACE41AFB9204008FA782 /* SendBirdCombineTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SendBirdCombine_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SendBirdCombineTests" */;
 			buildPhases = (
 				53318BF73B857DB750419413 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
@@ -197,9 +204,9 @@
 			dependencies = (
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
-			name = SendBirdCombine_Tests;
+			name = SendBirdCombineTests;
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* SendBirdCombine_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* SendBirdCombineTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -209,23 +216,24 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
+						DevelopmentTeam = DAPFLRCVJA;
+						LastSwiftMigration = 1140;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1140;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "SendBirdCombine" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -236,8 +244,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* SendBirdCombine_Example */,
-				607FACE41AFB9204008FA782 /* SendBirdCombine_Tests */,
+				607FACCF1AFB9204008FA782 /* SBCExample */,
+				607FACE41AFB9204008FA782 /* SendBirdCombineTests */,
 			);
 		};
 /* End PBXProject section */
@@ -278,7 +286,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SendBirdCombine_Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SBCExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -300,7 +308,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SendBirdCombine_Tests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SendBirdCombineTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -313,7 +321,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SendBirdCombine_Tests/Pods-SendBirdCombine_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SendBirdCombineTests/Pods-SendBirdCombineTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
@@ -324,7 +332,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SendBirdCombine_Tests/Pods-SendBirdCombine_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SendBirdCombineTests/Pods-SendBirdCombineTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9AEFCCC771DCDBCDC5120E9A /* [CP] Embed Pods Frameworks */ = {
@@ -333,16 +341,20 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SendBirdCombine_Example/Pods-SendBirdCombine_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-SBCExample/Pods-SBCExample-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SendBirdCombine/SendBirdCombine.framework",
+				"${PODS_ROOT}/SendBirdSDK/SendBirdSDK.framework",
+				"${PODS_ROOT}/SendBirdSDK/SendBirdSDK.framework.dSYM",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SendBirdCombine.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SendBirdSDK.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/SendBirdSDK.framework.dSYM",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SendBirdCombine_Example/Pods-SendBirdCombine_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SBCExample/Pods-SBCExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -370,7 +382,7 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* SendBirdCombine_Example */;
+			target = 607FACCF1AFB9204008FA782 /* SBCExample */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -399,6 +411,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -407,12 +420,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -452,6 +467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -460,12 +476,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -496,37 +514,45 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CB5B0426AA06D24E9D668C23 /* Pods-SendBirdCombine_Example.debug.xcconfig */;
+			baseConfigurationReference = 2A5C3857150935924C3C3186 /* Pods-SBCExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DAPFLRCVJA;
 				INFOPLIST_FILE = SendBirdCombine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.velosmobile.examples.SBCExample;
+				PRODUCT_NAME = SBCExample;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 639636D0F7239D515DEEB304 /* Pods-SendBirdCombine_Example.release.xcconfig */;
+			baseConfigurationReference = B7134E9047544E527180CBAB /* Pods-SBCExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = DAPFLRCVJA;
 				INFOPLIST_FILE = SendBirdCombine/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.velosmobile.examples.SBCExample;
+				PRODUCT_NAME = SBCExample;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 914FEBB5A9B91F0616E049C2 /* Pods-SendBirdCombine_Tests.debug.xcconfig */;
+			baseConfigurationReference = 2EC1AABF57A8C2020F6B5CFE /* Pods-SendBirdCombineTests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -537,30 +563,32 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SendBirdCombine_Example.app/SendBirdCombine_Example";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SBCExample.app/SBCExample";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B53E82EC486104AE33E23668 /* Pods-SendBirdCombine_Tests.release.xcconfig */;
+			baseConfigurationReference = 0403C6682D82453D4ABBF2F7 /* Pods-SendBirdCombineTests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SendBirdCombine_Example.app/SendBirdCombine_Example";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SBCExample.app/SBCExample";
 			};
 			name = Release;
 		};
@@ -576,7 +604,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SendBirdCombine_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SBCExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
@@ -585,7 +613,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SendBirdCombine_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "SendBirdCombineTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,

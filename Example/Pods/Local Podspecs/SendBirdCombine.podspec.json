@@ -1,0 +1,28 @@
+{
+  "name": "SendBirdCombine",
+  "version": "0.1.0",
+  "summary": "A short description of SendBirdCombine.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/velos/sendbird-combine",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "zac": "zac@velosmobile.com"
+  },
+  "source": {
+    "git": "https://github.com/velos/sendbird-combine.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "13.0"
+  },
+  "source_files": "SendBirdCombine/Classes/**/*",
+  "frameworks": "Combine",
+  "dependencies": {
+    "SendBirdSDK": [
+      "~> 3.0"
+    ]
+  }
+}

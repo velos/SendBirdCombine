@@ -1,12 +1,13 @@
 use_frameworks!
+platform :ios, '13.0'
 
-target 'SendBirdCombine_Example' do
+target 'SBCExample' do
   pod 'SendBirdCombine', :path => '../'
 
-  target 'SendBirdCombine_Tests' do
+  target 'SendBirdCombineTests' do
     inherit! :search_paths
 
-    pod 'Quick', '~> 1.2.0'
-    pod 'Nimble', '~> 7.0'
+    pod 'Quick', '~> 2.2.0'
+    pod 'Nimble', '~> 8.0'
   end
 end
