@@ -3,7 +3,7 @@ PODS:
   - Quick (2.2.0)
   - SendBirdCombine (0.1.0):
     - SendBirdSDK (~> 3.0)
-  - SendBirdSDK (3.0.175)
+  - SendBirdSDK (3.0.178)
 
 DEPENDENCIES:
   - Nimble (~> 8.0)
@@ -24,7 +24,7 @@ SPEC CHECKSUMS:
   Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e
   SendBirdCombine: d7d86a79495746126a70bb792b131cf4dcac9018
-  SendBirdSDK: aa120a61c32fa6fa901318e51819c16189390a40
+  SendBirdSDK: 527d6f48f5748d5db838f908ed4ecf1be54314d2
 
 PODFILE CHECKSUM: 46c8486d723522a89368aef50563e66a58d1e4e9
 
