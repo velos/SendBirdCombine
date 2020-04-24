@@ -15,7 +15,8 @@ public enum SendingStatus {
 }
 
 public enum SendingFailure: Error {
-    case failed(SBDBaseMessage?, SBDError)
+    case messageFailed(SBDBaseMessage?, SBDError)
+    case sendingFailed(SBDBaseMessage?, SBDError)
 }
 
 extension SBDMain {
@@ -77,8 +78,13 @@ extension SBDGroupChannel {
         let messageSubject = CurrentValueSubject<SendingStatus?, SendingFailure>(nil)
 
         let tempMessage = sendUserMessage(message) { (message, error) in
-            guard let sentMessage = message, error == nil else {
-                messageSubject.send(completion: .failure(SendingFailure.failed(message, error!)))
+            guard let sentMessage = message else {
+                messageSubject.send(completion: .failure(SendingFailure.messageFailed(message, error!)))
+                return
+            }
+            
+            guard error == nil else {
+                messageSubject.send(completion: .failure(SendingFailure.sendingFailed(sentMessage, error!)))
                 return
             }
             
@@ -93,12 +99,17 @@ extension SBDGroupChannel {
             .eraseToAnyPublisher()
     }
     
-    public func sendFileMessage(_ file: Data, type: String) -> AnyPublisher<SendingStatus, SendingFailure> {
+    public func sendFileMessage(_ data: Data, filename: String = UUID().uuidString, type: String) -> AnyPublisher<SendingStatus, SendingFailure> {
         let messageSubject = CurrentValueSubject<SendingStatus?, SendingFailure>(nil)
 
-        let tempMessage = sendFileMessage(withBinaryData: file, filename: UUID().uuidString, type: type, size: UInt(file.count), data: nil) { (message, error) in
-            guard let sentMessage = message, error == nil else {
-                messageSubject.send(completion: .failure(SendingFailure.failed(message, error!)))
+        let tempMessage = sendFileMessage(withBinaryData: data, filename: filename, type: type, size: UInt(data.count), data: nil) { (message, error) in
+            guard let sentMessage = message else {
+                messageSubject.send(completion: .failure(SendingFailure.messageFailed(message, error!)))
+                return
+            }
+            
+            guard error == nil else {
+                messageSubject.send(completion: .failure(SendingFailure.sendingFailed(sentMessage, error!)))
                 return
             }
             
@@ -114,43 +125,37 @@ extension SBDGroupChannel {
     }
     
     public func resendTextMessage(_ message: SBDUserMessage) -> AnyPublisher<SendingStatus, SendingFailure> {
-        let messageSubject = CurrentValueSubject<SendingStatus?, SendingFailure>(nil)
-        
-        let tempMessage = resendUserMessage(with: message) { (message, error) in
-            guard let sentMessage = message, error == nil else {
-                    messageSubject.send(completion: .failure(SendingFailure.failed(message, error!)))
-                    return
+        Future<SendingStatus, SendingFailure> { [weak self] promise in
+            self?.resendUserMessage(with: message) { (message, error) in
+                guard let sentMessage = message else {
+                    return promise(.failure(SendingFailure.messageFailed(message, error!)))
                 }
                 
-                messageSubject.send(SendingStatus.sent(sentMessage))
-                messageSubject.send(completion: .finished)
+                guard error == nil else {
+                    return promise(.failure(SendingFailure.sendingFailed(sentMessage, error!)))
+                }
+                
+                promise(.success(SendingStatus.sent(sentMessage)))
             }
-            
-            messageSubject.value = SendingStatus.temp(tempMessage)
-            
-            return messageSubject
-                .compactMap { $0 }
-                .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
     
     public func resendFileMessage(_ message: SBDFileMessage, data: Data?) -> AnyPublisher<SendingStatus, SendingFailure> {
-        let messageSubject = CurrentValueSubject<SendingStatus?, SendingFailure>(nil)
-        
-        let tempMessage = resendFileMessage(with: message, binaryData: data) { (message, error) in
-            guard let sentMessage = message, error == nil else {
-                    messageSubject.send(completion: .failure(SendingFailure.failed(message, error!)))
-                    return
+        Future<SendingStatus, SendingFailure> { [weak self] promise in
+            self?.resendFileMessage(with: message, binaryData: data) { (message, error) in
+                guard let sentMessage = message else {
+                    return promise(.failure(SendingFailure.messageFailed(message, error!)))
                 }
                 
-                messageSubject.send(SendingStatus.sent(sentMessage))
-                messageSubject.send(completion: .finished)
+                guard error == nil else {
+                    return promise(.failure(SendingFailure.sendingFailed(sentMessage, error!)))
+                }
+                
+                promise(.success(SendingStatus.sent(sentMessage)))
             }
-            
-            messageSubject.value = SendingStatus.temp(tempMessage)
-            
-            return messageSubject
-                .compactMap { $0 }
-                .eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
     }
 }
 
@@ -158,9 +163,14 @@ extension SBDGroupChannelListQuery {
     public func loadNextPage() -> Future<[SBDGroupChannel], SBDError> {
         Future<[SBDGroupChannel], SBDError> { promise in
             self.loadNextPage { (channels, error) in
-                guard let channels = channels, error == nil else {
+                guard error == nil else {
                     return promise(.failure(error!))
                 }
+                
+                guard let channels = channels else {
+                    return promise(.success([]))
+                }
+                
                 promise(.success(channels))
             }
         }
@@ -171,9 +181,14 @@ extension SBDApplicationUserListQuery {
     public func loadNextPage() -> Future<[SBDUser], SBDError> {
         Future<[SBDUser], SBDError> { promise in
             self.loadNextPage { (users, error) in
-                guard let users = users, error == nil else {
+                guard error == nil else {
                     return promise(.failure(error!))
                 }
+                
+                guard let users = users else {
+                    return promise(.success([]))
+                }
+                
                 promise(.success(users))
             }
         }
