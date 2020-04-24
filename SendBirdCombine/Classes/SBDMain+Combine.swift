@@ -15,8 +15,8 @@ public enum SendingStatus {
 }
 
 public enum SendingFailure: Error {
-    case messageFailed(SBDBaseMessage?, SBDError)
-    case sendingFailed(SBDBaseMessage?, SBDError)
+    case generalFailure(SBDError)
+    case sendingFailed(SBDBaseMessage, SBDError)
 }
 
 extension SBDMain {
@@ -79,7 +79,7 @@ extension SBDGroupChannel {
 
         let tempMessage = sendUserMessage(message) { (message, error) in
             guard let sentMessage = message else {
-                messageSubject.send(completion: .failure(SendingFailure.messageFailed(message, error!)))
+                messageSubject.send(completion: .failure(SendingFailure.generalFailure(error!)))
                 return
             }
             
@@ -104,7 +104,7 @@ extension SBDGroupChannel {
 
         let tempMessage = sendFileMessage(withBinaryData: data, filename: filename, type: type, size: UInt(data.count), data: nil) { (message, error) in
             guard let sentMessage = message else {
-                messageSubject.send(completion: .failure(SendingFailure.messageFailed(message, error!)))
+                messageSubject.send(completion: .failure(SendingFailure.generalFailure(error!)))
                 return
             }
             
@@ -128,7 +128,7 @@ extension SBDGroupChannel {
         Future<SendingStatus, SendingFailure> { [weak self] promise in
             self?.resendUserMessage(with: message) { (message, error) in
                 guard let sentMessage = message else {
-                    return promise(.failure(SendingFailure.messageFailed(message, error!)))
+                    return promise(.failure(SendingFailure.generalFailure(error!)))
                 }
                 
                 guard error == nil else {
@@ -145,7 +145,7 @@ extension SBDGroupChannel {
         Future<SendingStatus, SendingFailure> { [weak self] promise in
             self?.resendFileMessage(with: message, binaryData: data) { (message, error) in
                 guard let sentMessage = message else {
-                    return promise(.failure(SendingFailure.messageFailed(message, error!)))
+                    return promise(.failure(SendingFailure.generalFailure(error!)))
                 }
                 
                 guard error == nil else {
