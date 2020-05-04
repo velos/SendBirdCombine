@@ -30,11 +30,11 @@ import Combine
 import SendBirdSDK
 
 extension SBDMain {
-    public var userPublisher: AnyPublisher<UserEvent, Never> {
+    public var userEventPublisher: AnyPublisher<UserEvent, Never> {
         return SendbirdDelegateProxy.sharedInstance.userPassthrough.eraseToAnyPublisher()
     }
     
-    public var connectionPublisher: AnyPublisher<ConnectionEvent, Never> {
+    public var connectionEventPublisher: AnyPublisher<ConnectionEvent, Never> {
         return SendbirdDelegateProxy.sharedInstance.connectionPassthrough.eraseToAnyPublisher()
     }
 
