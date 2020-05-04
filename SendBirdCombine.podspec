@@ -26,5 +26,6 @@ Pod::Spec.new do |s|
   s.source_files = 'SendBirdCombine/Classes/**/*'
 
   s.frameworks = 'Combine'
+  s.dependency 'SendBirdSDK', '~> 3.0'
   s.dependency 'SendBirdSDK'
 end
