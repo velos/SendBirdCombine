@@ -76,20 +76,17 @@ public enum ConnectionEvent {
     case canceled
 }
 
-private struct ChannelEventInfo {
+struct ChannelEventInfo {
     let channel: SBDBaseChannel
     let event: ChannelEvent
 }
 
-public class SendbirdDelegateProxy: NSObject {
-    public static let sharedInstance = SendbirdDelegateProxy()
+class SendbirdDelegateProxy: NSObject {
+    static let sharedInstance = SendbirdDelegateProxy()
     
-    private let channelPassthrough: PassthroughSubject<ChannelEventInfo, Never>
-    private let userPassthrough: PassthroughSubject<UserEvent, Never>
-    private let connectionPassthrough: PassthroughSubject<ConnectionEvent, Never>
-    
-    public let userPublisher: AnyPublisher<UserEvent, Never>
-    public let connectionPublisher: AnyPublisher<ConnectionEvent, Never>
+    let channelPassthrough: PassthroughSubject<ChannelEventInfo, Never>
+    let userPassthrough: PassthroughSubject<UserEvent, Never>
+    let connectionPassthrough: PassthroughSubject<ConnectionEvent, Never>
     
     deinit {
         SBDMain.removeAllChannelDelegates()
@@ -102,165 +99,157 @@ public class SendbirdDelegateProxy: NSObject {
         userPassthrough = PassthroughSubject<UserEvent, Never>()
         connectionPassthrough = PassthroughSubject<ConnectionEvent, Never>()
         
-        userPublisher = userPassthrough.eraseToAnyPublisher()
-        connectionPublisher = connectionPassthrough.eraseToAnyPublisher()
-        
         super.init()
         
-        SBDMain.add(self as SBDChannelDelegate, identifier: "SendbirdDelegateProxy")
-    }
-    
-    public func channelPublisher(for channel: SBDBaseChannel) -> AnyPublisher<ChannelEvent, Never> {
-        return channelPassthrough
-            .filter { $0.channel == channel }
-            .map { $0.event }
-            .eraseToAnyPublisher()
+        SBDMain.add(self as SBDChannelDelegate, identifier: "SendbirdChannelDelegateProxy")
+        SBDMain.add(self as SBDUserEventDelegate, identifier: "SendbirdUserEventDelegateProxy")
+        SBDMain.add(self as SBDConnectionDelegate, identifier: "SendbirdConnectionDelegateProxy")
     }
 }
 
 extension SendbirdDelegateProxy: SBDChannelDelegate {
-    public func channel(_ sender: SBDBaseChannel, didReceive message: SBDBaseMessage) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.received(message)))
+    func channel(_ sender: SBDBaseChannel, didReceive message: SBDBaseMessage) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .received(message)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, didUpdate message: SBDBaseMessage) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.updated(message)))
+    func channel(_ sender: SBDBaseChannel, didUpdate message: SBDBaseMessage) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .updated(message)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, messageWasDeleted messageId: Int64) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.messageDeleted(messageId)))
+    func channel(_ sender: SBDBaseChannel, messageWasDeleted messageId: Int64) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .messageDeleted(messageId)))
     }
     
-    public func channel(_ channel: SBDBaseChannel, didReceiveMention message: SBDBaseMessage) {
-        channelPassthrough.send(ChannelEventInfo(channel: channel, event: ChannelEvent.receivedMention(message)))
+    func channel(_ channel: SBDBaseChannel, didReceiveMention message: SBDBaseMessage) {
+        channelPassthrough.send(ChannelEventInfo(channel: channel, event: .receivedMention(message)))
     }
     
-    public func channelDidUpdateReadReceipt(_ sender: SBDGroupChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.readReceiptUpdated))
+    func channelDidUpdateReadReceipt(_ sender: SBDGroupChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .readReceiptUpdated))
     }
     
-    public func channelDidUpdateDeliveryReceipt(_ sender: SBDGroupChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.deliveryReceiptUpdated))
+    func channelDidUpdateDeliveryReceipt(_ sender: SBDGroupChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .deliveryReceiptUpdated))
     }
     
-    public func channelDidUpdateTypingStatus(_ sender: SBDGroupChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.typingStatusUpdated))
+    func channelDidUpdateTypingStatus(_ sender: SBDGroupChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .typingStatusUpdated))
     }
     
-    public func channel(_ sender: SBDGroupChannel, didReceiveInvitation invitees: [SBDUser]?, inviter: SBDUser?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.receivedInvitation(invitees, inviter)))
+    func channel(_ sender: SBDGroupChannel, didReceiveInvitation invitees: [SBDUser]?, inviter: SBDUser?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .receivedInvitation(invitees, inviter)))
     }
     
-    public func channel(_ sender: SBDGroupChannel, didDeclineInvitation invitee: SBDUser, inviter: SBDUser?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.declinedInvitation(invitee, inviter)))
+    func channel(_ sender: SBDGroupChannel, didDeclineInvitation invitee: SBDUser, inviter: SBDUser?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .declinedInvitation(invitee, inviter)))
     }
     
-    public func channel(_ sender: SBDGroupChannel, userDidJoin user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userJoined(user)))
+    func channel(_ sender: SBDGroupChannel, userDidJoin user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userJoined(user)))
     }
     
-    public func channel(_ sender: SBDGroupChannel, userDidLeave user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userLeft(user)))
+    func channel(_ sender: SBDGroupChannel, userDidLeave user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userLeft(user)))
     }
     
-    public func channel(_ sender: SBDOpenChannel, userDidEnter user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userJoined(user)))
+    func channel(_ sender: SBDOpenChannel, userDidEnter user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userJoined(user)))
     }
     
-    public func channel(_ sender: SBDOpenChannel, userDidExit user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userLeft(user)))
+    func channel(_ sender: SBDOpenChannel, userDidExit user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userLeft(user)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, userWasMuted user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userMuted(user)))
+    func channel(_ sender: SBDBaseChannel, userWasMuted user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userMuted(user)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, userWasUnmuted user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userUnmuted(user)))
+    func channel(_ sender: SBDBaseChannel, userWasUnmuted user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userUnmuted(user)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, userWasBanned user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userBanned(user)))
+    func channel(_ sender: SBDBaseChannel, userWasBanned user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userBanned(user)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, userWasUnbanned user: SBDUser) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.userUnbanned(user)))
+    func channel(_ sender: SBDBaseChannel, userWasUnbanned user: SBDUser) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .userUnbanned(user)))
     }
     
-    public func channelWasFrozen(_ sender: SBDBaseChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.frozen))
+    func channelWasFrozen(_ sender: SBDBaseChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .frozen))
     }
     
-    public func channelWasUnfrozen(_ sender: SBDBaseChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.unfrozen))
+    func channelWasUnfrozen(_ sender: SBDBaseChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .unfrozen))
     }
     
-    public func channelWasChanged(_ sender: SBDBaseChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.changed))
+    func channelWasChanged(_ sender: SBDBaseChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .changed))
     }
     
-    public func channelWasHidden(_ sender: SBDGroupChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.hidden))
+    func channelWasHidden(_ sender: SBDGroupChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .hidden))
     }
     
-    public func channel(_ sender: SBDBaseChannel, createdMetaData: [String : String]?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.createdMetaData(createdMetaData)))
+    func channel(_ sender: SBDBaseChannel, createdMetaData: [String : String]?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .createdMetaData(createdMetaData)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, updatedMetaData: [String : String]?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.updatedMetaData(updatedMetaData)))
+    func channel(_ sender: SBDBaseChannel, updatedMetaData: [String : String]?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .updatedMetaData(updatedMetaData)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, deletedMetaDataKeys: [String]?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.deletedMetaData(deletedMetaDataKeys)))
+    func channel(_ sender: SBDBaseChannel, deletedMetaDataKeys: [String]?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .deletedMetaData(deletedMetaDataKeys)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, createdMetaCounters: [String : NSNumber]?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.createdMetaCounters(createdMetaCounters)
+    func channel(_ sender: SBDBaseChannel, createdMetaCounters: [String : NSNumber]?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .createdMetaCounters(createdMetaCounters)
         ))
     }
     
-    public func channel(_ sender: SBDBaseChannel, updatedMetaCounters: [String : NSNumber]?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.updatedMetaCounters(updatedMetaCounters)))
+    func channel(_ sender: SBDBaseChannel, updatedMetaCounters: [String : NSNumber]?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .updatedMetaCounters(updatedMetaCounters)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, deletedMetaCountersKeys: [String]?) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.deletedMetaCounters(deletedMetaCountersKeys)))
+    func channel(_ sender: SBDBaseChannel, deletedMetaCountersKeys: [String]?) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .deletedMetaCounters(deletedMetaCountersKeys)))
     }
     
-    public func channel(_ sender: SBDBaseChannel, updatedReaction reactionEvent: SBDReactionEvent) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.reactionUpdated(reactionEvent)))
+    func channel(_ sender: SBDBaseChannel, updatedReaction reactionEvent: SBDReactionEvent) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .reactionUpdated(reactionEvent)))
     }
     
-    public func channelDidUpdateOperators(_ sender: SBDBaseChannel) {
-        channelPassthrough.send(ChannelEventInfo(channel: sender, event: ChannelEvent.operatorsUpdated))
+    func channelDidUpdateOperators(_ sender: SBDBaseChannel) {
+        channelPassthrough.send(ChannelEventInfo(channel: sender, event: .operatorsUpdated))
     }
 }
 
 extension SendbirdDelegateProxy: SBDUserEventDelegate {
-    public func didDiscoverFriends(_ friends: [SBDUser]?) {
+    func didDiscoverFriends(_ friends: [SBDUser]?) {
         userPassthrough.send(.discoveredFriends(friends))
     }
     
-    public func didUpdateTotalUnreadMessageCount(_ totalCount: Int32, totalCountByCustomType: [String : NSNumber]?) {
+    func didUpdateTotalUnreadMessageCount(_ totalCount: Int32, totalCountByCustomType: [String : NSNumber]?) {
         userPassthrough.send(.updatedTotalUnreadMessageCount(totalCount, totalCountByCustomType))
     }
 }
 
 extension SendbirdDelegateProxy: SBDConnectionDelegate {
-    public func didStartReconnection() {
+    func didStartReconnection() {
         connectionPassthrough.send(.started)
     }
     
-    public func didSucceedReconnection() {
+    func didSucceedReconnection() {
         connectionPassthrough.send(.succeeded)
     }
     
-    public func didFailReconnection() {
+    func didFailReconnection() {
         connectionPassthrough.send(.failed)
     }
     
-    public func didCancelReconnection() {
+    func didCancelReconnection() {
         connectionPassthrough.send(.canceled)
     }
 }

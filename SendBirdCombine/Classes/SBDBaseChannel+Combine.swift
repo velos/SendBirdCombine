@@ -47,6 +47,13 @@ public enum MessageFailure: Error {
 }
 
 extension SBDBaseChannel {
+    public var channelPublisher: AnyPublisher<ChannelEvent, Never> {
+        return SendbirdDelegateProxy.sharedInstance.channelPassthrough
+            .filter { $0.channel == self }
+            .map { $0.event }
+            .eraseToAnyPublisher()
+    }
+
     public func sendUserMessage(_ message: String?) -> AnyPublisher<MessageEvent, MessageFailure> {
         let messageSubject = CurrentValueSubject<MessageEvent?, MessageFailure>(nil)
 

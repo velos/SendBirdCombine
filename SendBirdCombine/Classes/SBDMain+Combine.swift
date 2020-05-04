@@ -30,6 +30,14 @@ import Combine
 import SendBirdSDK
 
 extension SBDMain {
+    public var userPublisher: AnyPublisher<UserEvent, Never> {
+        return SendbirdDelegateProxy.sharedInstance.userPassthrough.eraseToAnyPublisher()
+    }
+    
+    public var connectionPublisher: AnyPublisher<ConnectionEvent, Never> {
+        return SendbirdDelegateProxy.sharedInstance.connectionPassthrough.eraseToAnyPublisher()
+    }
+
     public static func connect(userId: String, accessToken: String? = nil, apiHost: String? = nil, wsHost: String? = nil) -> AnyPublisher<SBDUser, SBDError> {
         Future<SBDUser, SBDError> { promise in
             connect(withUserId: userId, accessToken: accessToken, apiHost: apiHost, wsHost: wsHost) { (user, error) in
