@@ -61,6 +61,13 @@ extension SBDMain {
         .eraseToAnyPublisher()
     }
 
+    public static func blockUserId(_ userId: String) -> AnyPublisher<SBDUser, SBDError> {
+        Future<SBDUser, SBDError> { promise in
+            blockUserId(userId, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
     public static func unblockUserId(_ userId: String) -> AnyPublisher<Void, SBDError> {
         Future<Void, SBDError> { promise in
             unblockUserId(userId, completionHandler: VoidResult.handle(promise: promise))
