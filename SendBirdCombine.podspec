@@ -27,5 +27,4 @@ Pod::Spec.new do |s|
 
   s.frameworks = 'Combine'
   s.dependency 'SendBirdSDK', '~> 3.0'
-  s.dependency 'SendBirdSDK'
 end
