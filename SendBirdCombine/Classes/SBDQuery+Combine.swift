@@ -34,14 +34,14 @@ extension SBDGroupChannelListQuery {
         Future<[SBDGroupChannel], SBDError> { [weak self] promise in
             self?.loadNextPage { (channels, error) in
                 guard error == nil else {
-                    return promise(.failure(error!))
+                    if let error = error {
+                        return promise(.failure(error))
+                    } else {
+                        fatalError("Error must not be nil")
+                    }
                 }
-                
-                guard let channels = channels else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(channels))
+
+                promise(.success(channels ?? []))
             }
         }
         .eraseToAnyPublisher()
@@ -53,14 +53,14 @@ extension SBDGroupChannelMemberListQuery {
         Future<[SBDMember], SBDError> { [weak self] promise in
             self?.loadNextPage { (users, error) in
                 guard error == nil else {
-                    return promise(.failure(error!))
+                    if let error = error {
+                        return promise(.failure(error))
+                    } else {
+                        fatalError("Error must not be nil")
+                    }
                 }
-                
-                guard let users = users else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(users))
+
+                promise(.success(users ?? []))
             }
         }
         .eraseToAnyPublisher()
@@ -72,14 +72,14 @@ extension SBDOpenChannelListQuery {
         Future<[SBDOpenChannel], SBDError> { [weak self] promise in
             self?.loadNextPage { (channels, error) in
                 guard error == nil else {
-                    return promise(.failure(error!))
+                    if let error = error {
+                        return promise(.failure(error))
+                    } else {
+                        fatalError("Error must not be nil")
+                    }
                 }
-                
-                guard let channels = channels else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(channels))
+
+                promise(.success(channels ?? []))
             }
         }
         .eraseToAnyPublisher()
@@ -91,14 +91,14 @@ extension SBDUserListQuery {
         Future<[SBDUser], SBDError> { [weak self] promise in
             self?.loadNextPage { (users, error) in
                 guard error == nil else {
-                    return promise(.failure(error!))
+                    if let error = error {
+                        return promise(.failure(error))
+                    } else {
+                        fatalError("Error must not be nil")
+                    }
                 }
-                
-                guard let users = users else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(users))
+
+                promise(.success(users ?? []))
             }
         }
         .eraseToAnyPublisher()
@@ -110,14 +110,14 @@ extension SBDFriendListQuery {
         Future<[SBDUser], SBDError> { [weak self] promise in
             self?.loadNextPage { (users, error) in
                 guard error == nil else {
-                    return promise(.failure(error!))
+                    if let error = error {
+                        return promise(.failure(error))
+                    } else {
+                        fatalError("Error must not be nil")
+                    }
                 }
-                
-                guard let users = users else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(users))
+
+                promise(.success(users ?? []))
             }
         }
         .eraseToAnyPublisher()
@@ -129,14 +129,14 @@ extension SBDMessageSearchQuery {
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
             self?.loadNextPage { (messages, error) in
                 guard error == nil else {
-                    return promise(.failure(error!))
+                    if let error = error {
+                        return promise(.failure(error))
+                    } else {
+                        fatalError("Error must not be nil")
+                    }
                 }
-                
-                guard let messages = messages else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(messages))
+
+                promise(.success(messages ?? []))
             }
         }
         .eraseToAnyPublisher()
