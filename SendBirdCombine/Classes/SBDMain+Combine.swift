@@ -1,196 +1,145 @@
 //
-//  SendBirdCombine.swift
+//  SBDMain+Combine.swift
 //  SendBirdCombine
 //
-//  Created by David Rajan on 4/9/20.
+//  The MIT License (MIT)
+//
+//  Copyright (c) 2020 Velos Mobile LLC.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 //
 
 import Foundation
 import Combine
 import SendBirdSDK
 
-public enum SendingStatus {
-    case temp(SBDBaseMessage)
-    case sent(SBDBaseMessage)
-}
-
-public enum SendingFailure: Error {
-    case generalFailure(SBDError)
-    case sendingFailed(SBDBaseMessage, SBDError)
-}
-
 extension SBDMain {
-    public static func connect(userId: String) -> Future<SBDUser, SBDError> {
-        Future<SBDUser, SBDError> { promise in
-            SBDMain.connect(withUserId: userId) { (user, error) in
-                guard let user = user, error == nil else {
-                    return promise(.failure(error!))
-                }
-                promise(.success(user))
-            }
-        }
+    public var userEventPublisher: AnyPublisher<UserEvent, Never> {
+        return SendbirdDelegateProxy.sharedInstance.userPassthrough.eraseToAnyPublisher()
     }
-    
-    public static func disconnect() -> Future<Void, Never> {
+
+    public var connectionEventPublisher: AnyPublisher<ConnectionEvent, Never> {
+        return SendbirdDelegateProxy.sharedInstance.connectionPassthrough.eraseToAnyPublisher()
+    }
+
+    public static func connect(userId: String, accessToken: String? = nil, apiHost: String? = nil, wsHost: String? = nil) -> AnyPublisher<SBDUser, SBDError> {
+        Future<SBDUser, SBDError> { promise in
+            connect(withUserId: userId, accessToken: accessToken, apiHost: apiHost, wsHost: wsHost, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func disconnect() -> AnyPublisher<Void, Never> {
         Future<Void, Never> { promise in
-            SBDMain.disconnect() {
+            disconnect {
                 return promise(.success(()))
             }
         }
+        .eraseToAnyPublisher()
     }
-    
-    public static func blockUser(_ user: SBDUser) -> Future<SBDUser, SBDError> {
+
+    public static func blockUser(_ user: SBDUser) -> AnyPublisher<SBDUser, SBDError> {
         Future<SBDUser, SBDError> { promise in
-            SBDMain.blockUser(user) { (user, error) in
-                guard let user = user, error == nil else {
-                    return promise(.failure(error!))
-                }
-                promise(.success(user))
-            }
+            blockUser(user, completionHandler: Result.handle(promise: promise))
         }
+        .eraseToAnyPublisher()
     }
-    
-    public static func unblockUser(_ user: SBDUser) -> Future<Void, SBDError> {
+
+    public static func unblockUserId(_ userId: String) -> AnyPublisher<Void, SBDError> {
         Future<Void, SBDError> { promise in
-            SBDMain.unblockUser(user) { error in
-                guard error == nil else {
-                    return promise(.failure(error!))
-                }
-                promise(.success(()))
-            }
-        }
-    }
-}
-
-extension SBDGroupChannel {
-    public static func createChannel(with params: SBDGroupChannelParams) -> Future<SBDGroupChannel, SBDError> {
-        Future<SBDGroupChannel, SBDError> { promise in
-            SBDGroupChannel.createChannel(with: params) { (channel, error) in
-                guard let channel = channel, error == nil else {
-                    return promise(.failure(error!))
-                }
-                promise(.success(channel))
-            }
-        }
-    }
-    
-    public func sendUserMessage(_ message: String?) -> AnyPublisher<SendingStatus, SendingFailure> {
-        let messageSubject = CurrentValueSubject<SendingStatus?, SendingFailure>(nil)
-
-        let tempMessage = sendUserMessage(message) { (message, error) in
-            guard let sentMessage = message else {
-                messageSubject.send(completion: .failure(SendingFailure.generalFailure(error!)))
-                return
-            }
-            
-            guard error == nil else {
-                messageSubject.send(completion: .failure(SendingFailure.sendingFailed(sentMessage, error!)))
-                return
-            }
-            
-            messageSubject.send(SendingStatus.sent(sentMessage))
-            messageSubject.send(completion: .finished)
-        }
-        
-        messageSubject.value = SendingStatus.temp(tempMessage)
-        
-        return messageSubject
-            .compactMap { $0 }
-            .eraseToAnyPublisher()
-    }
-    
-    public func sendFileMessage(_ data: Data, filename: String = UUID().uuidString, type: String) -> AnyPublisher<SendingStatus, SendingFailure> {
-        let messageSubject = CurrentValueSubject<SendingStatus?, SendingFailure>(nil)
-
-        let tempMessage = sendFileMessage(withBinaryData: data, filename: filename, type: type, size: UInt(data.count), data: nil) { (message, error) in
-            guard let sentMessage = message else {
-                messageSubject.send(completion: .failure(SendingFailure.generalFailure(error!)))
-                return
-            }
-            
-            guard error == nil else {
-                messageSubject.send(completion: .failure(SendingFailure.sendingFailed(sentMessage, error!)))
-                return
-            }
-            
-            messageSubject.send(SendingStatus.sent(sentMessage))
-            messageSubject.send(completion: .finished)
-        }
-        
-        messageSubject.value = SendingStatus.temp(tempMessage)
-        
-        return messageSubject
-            .compactMap { $0 }
-            .eraseToAnyPublisher()
-    }
-    
-    public func resendTextMessage(_ message: SBDUserMessage) -> AnyPublisher<SendingStatus, SendingFailure> {
-        Future<SendingStatus, SendingFailure> { [weak self] promise in
-            self?.resendUserMessage(with: message) { (message, error) in
-                guard let sentMessage = message else {
-                    return promise(.failure(SendingFailure.generalFailure(error!)))
-                }
-                
-                guard error == nil else {
-                    return promise(.failure(SendingFailure.sendingFailed(sentMessage, error!)))
-                }
-                
-                promise(.success(SendingStatus.sent(sentMessage)))
-            }
+            unblockUserId(userId, completionHandler: VoidResult.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
-    
-    public func resendFileMessage(_ message: SBDFileMessage, data: Data?) -> AnyPublisher<SendingStatus, SendingFailure> {
-        Future<SendingStatus, SendingFailure> { [weak self] promise in
-            self?.resendFileMessage(with: message, binaryData: data) { (message, error) in
-                guard let sentMessage = message else {
-                    return promise(.failure(SendingFailure.generalFailure(error!)))
-                }
-                
-                guard error == nil else {
-                    return promise(.failure(SendingFailure.sendingFailed(sentMessage, error!)))
-                }
-                
-                promise(.success(SendingStatus.sent(sentMessage)))
-            }
+
+    public static func unblockUser(_ user: SBDUser) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { promise in
+            unblockUser(user, completionHandler: VoidResult.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
-}
 
-extension SBDGroupChannelListQuery {
-    public func loadNextPage() -> Future<[SBDGroupChannel], SBDError> {
-        Future<[SBDGroupChannel], SBDError> { promise in
-            self.loadNextPage { (channels, error) in
-                guard error == nil else {
-                    return promise(.failure(error!))
-                }
-                
-                guard let channels = channels else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(channels))
-            }
+    public static func updateCurrentUserInfo(withNickname nickname: String?, profileUrl: String?) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { promise in
+            updateCurrentUserInfo(withNickname: nickname, profileUrl: profileUrl, completionHandler: VoidResult.handle(promise: promise))
         }
+        .eraseToAnyPublisher()
     }
-}
 
-extension SBDApplicationUserListQuery {
-    public func loadNextPage() -> Future<[SBDUser], SBDError> {
-        Future<[SBDUser], SBDError> { promise in
-            self.loadNextPage { (users, error) in
-                guard error == nil else {
-                    return promise(.failure(error!))
-                }
-                
-                guard let users = users else {
-                    return promise(.success([]))
-                }
-                
-                promise(.success(users))
-            }
+    public static func updateCurrentUserInfo(withNickname nickname: String?, profileImage: Data?) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { promise in
+            updateCurrentUserInfo(withNickname: nickname, profileImage: profileImage, completionHandler: VoidResult.handle(promise: promise))
         }
+        .eraseToAnyPublisher()
+    }
+
+    public static func registerDevicePushKitToken(_ token: Data, unique: Bool) -> AnyPublisher<SBDPushTokenRegistrationStatus, SBDError> {
+        Future<SBDPushTokenRegistrationStatus, SBDError> { promise in
+            registerDevicePushKitToken(token, unique: unique, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func unregisterDevicePushKitToken(_ token: Data) -> AnyPublisher<[AnyHashable: Any], SBDError> {
+        Future<[AnyHashable: Any], SBDError> { promise in
+            unregisterPushKitToken(token, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func unregisterAllDevicePushKitToken() -> AnyPublisher<[AnyHashable: Any], SBDError> {
+        Future<[AnyHashable: Any], SBDError> { promise in
+            unregisterAllPushKitToken(completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func getChannelCount(with filter: SBDMemberStateFilter) -> AnyPublisher<UInt, SBDError> {
+        Future<UInt, SBDError> { promise in
+            getChannelCount(with: filter, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func getTotalUnreadChannelCount() -> AnyPublisher<UInt, SBDError> {
+        Future<UInt, SBDError> { promise in
+            getTotalUnreadChannelCount(completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func getTotalUnreadMessageCount(with params: SBDGroupChannelTotalUnreadMessageCountParams? = nil) -> AnyPublisher<UInt, SBDError> {
+        Future<UInt, SBDError> { promise in
+            guard let params = params else {
+                getTotalUnreadMessageCount(completionHandler: Result.handle(promise: promise))
+                return
+            }
+
+            getTotalUnreadMessageCount(with: params, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public static func getUnreadItemCount(with key: SBDUnreadItemKey) -> AnyPublisher<SBDUnreadItemCount, SBDError> {
+        Future<SBDUnreadItemCount, SBDError> { promise in
+            getUnreadItemCount(with: key, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
     }
 }
