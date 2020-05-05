@@ -32,17 +32,7 @@ import SendBirdSDK
 extension SBDGroupChannelListQuery {
     public func loadNextPage() -> AnyPublisher<[SBDGroupChannel], SBDError> {
         Future<[SBDGroupChannel], SBDError> { [weak self] promise in
-            self?.loadNextPage { (channels, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(channels ?? []))
-            }
+            self?.loadNextPage(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
@@ -51,17 +41,7 @@ extension SBDGroupChannelListQuery {
 extension SBDGroupChannelMemberListQuery {
     public func loadNextPage() -> AnyPublisher<[SBDMember], SBDError> {
         Future<[SBDMember], SBDError> { [weak self] promise in
-            self?.loadNextPage { (users, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(users ?? []))
-            }
+            self?.loadNextPage(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
@@ -70,17 +50,7 @@ extension SBDGroupChannelMemberListQuery {
 extension SBDOpenChannelListQuery {
     public func loadNextPage() -> AnyPublisher<[SBDOpenChannel], SBDError> {
         Future<[SBDOpenChannel], SBDError> { [weak self] promise in
-            self?.loadNextPage { (channels, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(channels ?? []))
-            }
+            self?.loadNextPage(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
@@ -89,17 +59,7 @@ extension SBDOpenChannelListQuery {
 extension SBDUserListQuery {
     public func loadNextPage() -> AnyPublisher<[SBDUser], SBDError> {
         Future<[SBDUser], SBDError> { [weak self] promise in
-            self?.loadNextPage { (users, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(users ?? []))
-            }
+            self?.loadNextPage(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
@@ -108,17 +68,7 @@ extension SBDUserListQuery {
 extension SBDFriendListQuery {
     public func loadNextPage() -> AnyPublisher<[SBDUser], SBDError> {
         Future<[SBDUser], SBDError> { [weak self] promise in
-            self?.loadNextPage { (users, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(users ?? []))
-            }
+            self?.loadNextPage(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
@@ -127,17 +77,7 @@ extension SBDFriendListQuery {
 extension SBDMessageSearchQuery {
     public func loadNextPage() -> AnyPublisher<[SBDBaseMessage], SBDError> {
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
-            self?.loadNextPage { (messages, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(messages ?? []))
-            }
+            self?.loadNextPage(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }

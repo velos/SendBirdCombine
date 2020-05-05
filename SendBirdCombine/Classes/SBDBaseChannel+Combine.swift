@@ -372,34 +372,14 @@ extension SBDBaseChannel {
     public func getNextMessages(byTimestamp timestamp: Int64, inclusiveTimestamp: Bool = true, limit: Int = Int.max, reverse: Bool = false, messageType: SBDMessageTypeFilter = .all, customType: String? = nil, senderUserIds: [String]? = nil, includeMetaArray: Bool = true, includeReactions: Bool = true) -> AnyPublisher<[SBDBaseMessage], SBDError> {
 
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
-            self?.getNextMessages(byTimestamp: timestamp, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions) { (messages, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(messages ?? []))
-            }
+            self?.getNextMessages(byTimestamp: timestamp, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
 
     public func getNextMessages(byId messageId: Int64, inclusiveTimestamp: Bool = true, limit: Int = Int.max, reverse: Bool = false, messageType: SBDMessageTypeFilter = .all, customType: String? = nil, senderUserIds: [String]? = nil, includeMetaArray: Bool = true, includeReactions: Bool = true) -> AnyPublisher<[SBDBaseMessage], SBDError> {
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
-            self?.getNextMessages(byMessageId: messageId, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: { (messages, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(messages ?? []))
-            })
+            self?.getNextMessages(byMessageId: messageId, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
@@ -407,51 +387,21 @@ extension SBDBaseChannel {
     public func getPreviousMessages(byTimestamp timestamp: Int64, inclusiveTimestamp: Bool = true, limit: Int = Int.max, reverse: Bool = false, messageType: SBDMessageTypeFilter = .all, customType: String? = nil, senderUserIds: [String]? = nil, includeMetaArray: Bool = true, includeReactions: Bool = true) -> AnyPublisher<[SBDBaseMessage], SBDError> {
 
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
-            self?.getPreviousMessages(byTimestamp: timestamp, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions) { (messages, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(messages ?? []))
-            }
+            self?.getPreviousMessages(byTimestamp: timestamp, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
 
     public func getPreviousMessages(byId messageId: Int64, inclusiveTimestamp: Bool = true, limit: Int = Int.max, reverse: Bool = false, messageType: SBDMessageTypeFilter = .all, customType: String? = nil, senderUserIds: [String]? = nil, includeMetaArray: Bool = true, includeReactions: Bool = true) -> AnyPublisher<[SBDBaseMessage], SBDError> {
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
-            self?.getPreviousMessages(byMessageId: messageId, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: { (messages, error) in
-                guard error == nil else {
-                    if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(messages ?? []))
-            })
+            self?.getPreviousMessages(byMessageId: messageId, inclusiveTimestamp: inclusiveTimestamp, limit: limit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
 
     public func getPreviousAndNextMessages(byTimestamp timestamp: Int64, inclusiveTimestamp: Bool = true, prevLimit: Int = Int.max, nextLimit: Int = Int.max, reverse: Bool = false, messageType: SBDMessageTypeFilter = .all, customType: String? = nil, senderUserIds: [String]? = nil, includeMetaArray: Bool = true, includeReactions: Bool = true) -> AnyPublisher<[SBDBaseMessage], SBDError> {
         Future<[SBDBaseMessage], SBDError> { [weak self] promise in
-            self?.getPreviousAndNextMessages(byTimestamp: timestamp, prevLimit: prevLimit, nextLimit: nextLimit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions) { (messages, error) in
-                guard error == nil else {
-                   if let error = error {
-                        return promise(.failure(error))
-                    } else {
-                        fatalError("Error must not be nil")
-                    }
-                }
-
-                promise(.success(messages ?? []))
-            }
+            self?.getPreviousAndNextMessages(byTimestamp: timestamp, prevLimit: prevLimit, nextLimit: nextLimit, reverse: reverse, messageType: messageType, customType: customType, senderUserIds: senderUserIds, includeMetaArray: includeMetaArray, includeReactions: includeReactions, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
