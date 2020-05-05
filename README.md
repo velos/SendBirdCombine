@@ -68,7 +68,7 @@ channel.sendUserMessage("message to send")
 
 3. To listen for channel events:
 ```swift
-SendbirdDelegateProxy.sharedInstance.channelPublisher(for: `SBDBaseChannel instance`)
+channel.eventPublisher
 .sink { event in
     switch event {
     case let .received(message):
