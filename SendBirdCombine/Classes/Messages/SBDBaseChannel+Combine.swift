@@ -49,7 +49,7 @@ public enum MessageFailure: Error {
 
 extension SBDBaseChannel {
     public var eventPublisher: AnyPublisher<ChannelEvent, Never> {
-        return SendbirdDelegateProxy.sharedInstance.channelPassthrough
+        return SendBirdDelegateProxy.sharedInstance.channelPassthrough
             .filter { $0.channel == self }
             .map { $0.event }
             .eraseToAnyPublisher()

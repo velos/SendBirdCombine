@@ -1,5 +1,5 @@
 //
-//  SendbirdDelegateProxy.swift
+//  SendBirdDelegateProxy.swift
 //  SendBirdCombine
 //
 //  The MIT License (MIT)
@@ -77,8 +77,8 @@ struct ChannelEventInfo {
     let event: ChannelEvent
 }
 
-class SendbirdDelegateProxy: NSObject {
-    static let sharedInstance = SendbirdDelegateProxy()
+class SendBirdDelegateProxy: NSObject {
+    static let sharedInstance = SendBirdDelegateProxy()
 
     let channelPassthrough: PassthroughSubject<ChannelEventInfo, Never>
     let userPassthrough: PassthroughSubject<UserEvent, Never>
@@ -103,7 +103,7 @@ class SendbirdDelegateProxy: NSObject {
     }
 }
 
-extension SendbirdDelegateProxy: SBDChannelDelegate {
+extension SendBirdDelegateProxy: SBDChannelDelegate {
     func channel(_ sender: SBDBaseChannel, didReceive message: SBDBaseMessage) {
         channelPassthrough.send(ChannelEventInfo(channel: sender, event: .received(message)))
     }
@@ -222,7 +222,7 @@ extension SendbirdDelegateProxy: SBDChannelDelegate {
     }
 }
 
-extension SendbirdDelegateProxy: SBDUserEventDelegate {
+extension SendBirdDelegateProxy: SBDUserEventDelegate {
     func didDiscoverFriends(_ friends: [SBDUser]?) {
         userPassthrough.send(.discoveredFriends(friends))
     }
@@ -232,7 +232,7 @@ extension SendbirdDelegateProxy: SBDUserEventDelegate {
     }
 }
 
-extension SendbirdDelegateProxy: SBDConnectionDelegate {
+extension SendBirdDelegateProxy: SBDConnectionDelegate {
     func didStartReconnection() {
         connectionPassthrough.send(.started)
     }

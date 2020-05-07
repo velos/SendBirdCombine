@@ -30,12 +30,12 @@ import Combine
 import SendBirdSDK
 
 extension SBDMain {
-    public var userEventPublisher: AnyPublisher<UserEvent, Never> {
-        return SendbirdDelegateProxy.sharedInstance.userPassthrough.eraseToAnyPublisher()
+    public static var userEventPublisher: AnyPublisher<UserEvent, Never> {
+        return SendBirdDelegateProxy.sharedInstance.userPassthrough.eraseToAnyPublisher()
     }
 
-    public var connectionEventPublisher: AnyPublisher<ConnectionEvent, Never> {
-        return SendbirdDelegateProxy.sharedInstance.connectionPassthrough.eraseToAnyPublisher()
+    public static var connectionEventPublisher: AnyPublisher<ConnectionEvent, Never> {
+        return SendBirdDelegateProxy.sharedInstance.connectionPassthrough.eraseToAnyPublisher()
     }
 
     public static func connect(userId: String, accessToken: String? = nil, apiHost: String? = nil, wsHost: String? = nil) -> AnyPublisher<SBDUser, SBDError> {
