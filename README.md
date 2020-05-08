@@ -19,6 +19,12 @@ it, simply add the following line to your Podfile:
 pod 'SendBirdCombine'
 ```
 
+SendBirdCombine also provides support for SendBird Calls. This isn't included by default due to the large binary size of the SendBirdCalls SDK, but if you wish to include it, add this line to your Podfile instead, which will give you support for the base messaging features in addition to Calls:
+
+```ruby
+pod 'SendBirdCombine/Calls'
+```
+
 ## Usage
 
 SendBirdCombine provides `Combine` publishers to your `SendBird`-enabled messaging app. You may subscribe to these publishers instead of using the default SendBird API functions. For example: 

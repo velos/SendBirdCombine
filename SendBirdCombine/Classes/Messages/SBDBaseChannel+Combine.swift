@@ -32,6 +32,7 @@ import SendBirdSDK
 public enum ChannelCreateEvent {
     case created(SBDBaseChannel)
     case createdDistinct(SBDBaseChannel, Bool)
+    case updated(SBDBaseChannel)
     case progress(Int64, Int64, Int64)
 }
 
@@ -48,7 +49,7 @@ public enum MessageFailure: Error {
 
 extension SBDBaseChannel {
     public var eventPublisher: AnyPublisher<ChannelEvent, Never> {
-        return SendbirdDelegateProxy.sharedInstance.channelPassthrough
+        return SendBirdDelegateProxy.sharedInstance.channelPassthrough
             .filter { $0.channel == self }
             .map { $0.event }
             .eraseToAnyPublisher()
@@ -495,6 +496,41 @@ extension SBDGroupChannel {
         .eraseToAnyPublisher()
     }
 
+    public static func getWithUrl(channelUrl: String) -> AnyPublisher<SBDGroupChannel, SBDError> {
+        Future<SBDGroupChannel, SBDError> { promise in
+            getWithUrl(channelUrl, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func invite(_ user: SBDUser) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.invite(user, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func inviteUserId(_ userId: String) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.inviteUserId(userId, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func invite(_ users: [SBDUser]) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.invite(users, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func inviteUserIds(_ userIds: [String]) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.inviteUserIds(userIds, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
     public func update(with name: String? = nil, isDistinct: Bool = true, coverImage: Data? = nil, coverImageName: String, data: String? = nil, operatorUserIds: [String]? = nil, customType: String? = nil) -> AnyPublisher<ChannelCreateEvent, SBDError> {
         let publisher = PassthroughSubject<ChannelCreateEvent, SBDError>()
         update(withName: name, isDistinct: isDistinct, coverImage: coverImage, coverImageName: coverImageName, data: data, customType: customType, progressHandler: { (bytesSent, totalBytesSent, totalExpectedBytesToSend) in
@@ -510,7 +546,7 @@ extension SBDGroupChannel {
                 }
             }
 
-            publisher.send(.created(channel))
+            publisher.send(.updated(channel))
             publisher.send(completion: .finished)
         })
 
@@ -591,6 +627,13 @@ extension SBDOpenChannel {
         return publisher.eraseToAnyPublisher()
     }
 
+    public static func getWithUrl(_ channelUrl: String) -> AnyPublisher<SBDOpenChannel, SBDError> {
+        Future<SBDOpenChannel, SBDError> { promise in
+            getWithUrl(channelUrl, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
     public func update(with name: String? = nil, coverImage: Data? = nil, coverImageName: String, data: String? = nil, operatorUserIds: [String]? = nil, customType: String? = nil) -> AnyPublisher<ChannelCreateEvent, SBDError> {
         let publisher = PassthroughSubject<ChannelCreateEvent, SBDError>()
         update(withName: name, coverImage: coverImage, coverImageName: coverImageName, data: data, operatorUserIds: operatorUserIds, customType: customType, progressHandler: { (bytesSent, totalBytesSent, totalExpectedBytesToSend) in
@@ -606,18 +649,11 @@ extension SBDOpenChannel {
                 }
             }
 
-            publisher.send(.created(channel))
+            publisher.send(.updated(channel))
             publisher.send(completion: .finished)
         })
 
         return publisher.eraseToAnyPublisher()
-    }
-
-    public static func getWithUrl(_ channelUrl: String) -> AnyPublisher<SBDOpenChannel, SBDError> {
-        Future<SBDOpenChannel, SBDError> { promise in
-            getWithUrl(channelUrl, completionHandler: Result.handle(promise: promise))
-        }
-        .eraseToAnyPublisher()
     }
 
     public func enter() -> AnyPublisher<Void, SBDError> {
