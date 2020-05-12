@@ -201,6 +201,13 @@ extension SBDBaseChannel {
         .eraseToAnyPublisher()
     }
 
+    public func deleteMessage(withMessageId messageId: Int64) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.deleteMessage(withMessageId: messageId, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
     public func updateUserMessage(_ message: SBDUserMessage, text: String?, data: String? = nil, customType: String? = nil) -> AnyPublisher<MessageEvent, MessageFailure> {
         Future<MessageEvent, MessageFailure> { [weak self] promise in
             self?.update(message, messageText: text, data: data, customType: customType, completionHandler: { (message, error) in
@@ -406,6 +413,104 @@ extension SBDBaseChannel {
         }
         .eraseToAnyPublisher()
     }
+
+    public func createMetaCounters(_ metaCounters: [String: NSNumber]) -> AnyPublisher<[String: NSNumber], SBDError> {
+        Future<[String: NSNumber], SBDError> { [weak self] promise in
+            self?.createMetaCounters(metaCounters, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func getMetaCounters(withKeys keys: [String]?) -> AnyPublisher<[String: NSNumber], SBDError> {
+        Future<[String: NSNumber], SBDError> { [weak self] promise in
+            self?.getMetaCounters(withKeys: keys, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func getAllMetaCounters() -> AnyPublisher<[String: NSNumber], SBDError> {
+        Future<[String: NSNumber], SBDError> { [weak self] promise in
+            self?.getAllMetaCounters(completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func updateMetaCounters(_ metaCounters: [String: NSNumber]) -> AnyPublisher<[String: NSNumber], SBDError> {
+        Future<[String: NSNumber], SBDError> { [weak self] promise in
+            self?.updateMetaCounters(metaCounters, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func increaseMetaCounters(_ metaCounters: [String: NSNumber]) -> AnyPublisher<[String: NSNumber], SBDError> {
+        Future<[String: NSNumber], SBDError> { [weak self] promise in
+            self?.increaseMetaCounters(metaCounters, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func decreaseMetaCounters(_ metaCounters: [String: NSNumber]) -> AnyPublisher<[String: NSNumber], SBDError> {
+        Future<[String: NSNumber], SBDError> { [weak self] promise in
+            self?.decreaseMetaCounters(metaCounters, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func deleteMetaCounters(withKey key: String) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.deleteMetaCounters(withKey: key, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func deleteAllMetaCounters() -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.deleteAllMetaCounters(completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func createMetaData(_ metaData: [String: String]) -> AnyPublisher<[String: String], SBDError> {
+        Future<[String: String], SBDError> { [weak self] promise in
+            self?.createMetaData(metaData, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func getMetaData(withKeys: [String]?) -> AnyPublisher<[String: NSObject], SBDError> {
+        Future<[String: NSObject], SBDError> { [weak self] promise in
+            self?.getMetaData(withKeys: withKeys, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func getAllMetaData() -> AnyPublisher<[String: NSObject], SBDError> {
+        Future<[String: NSObject], SBDError> { [weak self] promise in
+            self?.getAllMetaData(completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func updateMetaCounters(_ metaData: [String: String]) -> AnyPublisher<[String: NSObject], SBDError> {
+        Future<[String: NSObject], SBDError> { [weak self] promise in
+            self?.updateMetaData(metaData, completionHandler: Result.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func deleteMetaData(withKey key: String) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.deleteMetaData(withKey: key, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func deleteAllMetaData() -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.deleteAllMetaData(completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
 }
 
 extension SBDGroupChannel {
@@ -527,6 +632,27 @@ extension SBDGroupChannel {
     public func inviteUserIds(_ userIds: [String]) -> AnyPublisher<Void, SBDError> {
         Future<Void, SBDError> { [weak self] promise in
             self?.inviteUserIds(userIds, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func acceptInvitation() -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.acceptInvitation(completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func acceptInvitation(withAaccessCode accessCode: String?) -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.acceptInvitation(withAccessCode: accessCode, completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
+
+    public func declineInvitation() -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.declineInvitation(completionHandler: VoidResult.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }

@@ -58,7 +58,7 @@ extension SendBirdCall {
         .eraseToAnyPublisher()
     }
 
-    public static func dial(with params: DialParams, callOptions: CallOptions) -> AnyPublisher<DirectCall, SBCError> {
+    public static func dial(with params: DialParams) -> AnyPublisher<DirectCall, SBCError> {
         Future<DirectCall, SBCError> { promise in
             dial(with: params, completionHandler: Result.handle(promise: promise))
         }
