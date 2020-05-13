@@ -15,13 +15,14 @@ Pod::Spec.new do |s|
                         This pod provides Combine extensions for the SendBird chat service SDK
                        DESC
 
-  s.homepage         = 'https://github.com/velos/sendbird-combine'
+  s.homepage         = 'https://github.com/velos/SendBirdCombine'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'David Rajan' => 'david@velosmobile.com' }
   s.source           = { :git => 'https://github.com/velos/sendbird-combine.git', :tag => s.version.to_s }
 
   s.platform = :ios, '13.0'
   s.ios.deployment_target = '13.0'
+  s.swift_version = '5.0'
 
   s.subspec 'Messages' do |m|
       m.source_files = 'SendBirdCombine/Classes/Messages/**/*'
