@@ -120,7 +120,7 @@ extension SendBirdCall {
 }
 
 extension DirectCall {
-    public func eventPublisher() -> AnyPublisher<DirectCallEvent, Never> {
+    public var eventPublisher: AnyPublisher<DirectCallEvent, Never> {
         self.delegate = SendBirdCallsDelegateProxy.sharedInstance
 
         return SendBirdCallsDelegateProxy.sharedInstance.directCallPassthrough

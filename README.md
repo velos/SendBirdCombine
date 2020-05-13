@@ -97,6 +97,9 @@ channel.eventPublisher
 
 ```swift
 SBDOpenChannel.getWithUrl("channelUrl") { (channel, error) in
+    var enteredChannel: Bool = false
+    var channelMetadata: [String: NSObject]?
+
     guard let channel = channel, error == nil else {
         if let error = error {
             print("error getting channel: \(error)")
@@ -106,28 +109,46 @@ SBDOpenChannel.getWithUrl("channelUrl") { (channel, error) in
         }
     }
 
+    let group = DispatchGroup()
+
+    group.enter()
     channel.enter { (error) in
         guard error == nil else {
             if let error = error {
                 print("error entering channel: \(error)")
+                group.leave()
+                return
+            } else {
+                fatalError("error can't be nil")
+            }
+        }
+        enteredChannel = true
+        group.leave()
+    }
+
+    group.enter()
+    channel.getAllMetaData { (metadata, error) in
+        guard let metadata = metadata, error == nil else {
+            if let error = error {
+                print("error retrieving metadata: \(error)")
+                group.leave()
                 return
             } else {
                 fatalError("error can't be nil")
             }
         }
 
-        channel.getAllMetaData { (metadata, error) in
-            guard let metadata = metadata, error == nil else {
-                if let error = error {
-                    print("error retrieving metadata: \(error)")
-                    return
-                } else {
-                    fatalError("error can't be nil")
-                }
-            }
+        channelMetadata = metadata
+        group.leave()
+    }
 
-            print("joined and got metadata: \(metadata)")
+    group.notify(queue: .main) {
+        guard enteredChannel == true, let metadata = channelMetadata else {
+            print("error entering channel and/or retrieving metadata")
+            return
         }
+
+        print("entered channel and got metadata: \(metadata)")
     }
 }
 ```
@@ -185,7 +206,7 @@ SendBirdCall.dial(with: DialParams(calleeId: "calleeId"))
 
 // Listens for call events
 func handle(call: DirectCall) {
-    call.eventPublisher()
+    call.eventPublisher
         .sink { event in
             switch event {
             case .connected:
