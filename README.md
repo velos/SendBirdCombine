@@ -93,7 +93,7 @@ channel.eventPublisher
     .store(in: &subscriptions)
 ```
 
-4. The advantages of using Combine become more apparent when you chain multiple operations that would normally require nested closures. For example, to enter an Open Channel and upon entering, retrieve all metadata - without Combine, the code might look something like:
+4. The advantages of using Combine become more apparent when you chain multiple operations that would normally require nested closures and/or DispatchGroups. For example, to enter an Open Channel by URL and then simultaneously enter the retrieved channel and also download its metadata - without Combine, the code might look something like:
 
 ```swift
 SBDOpenChannel.getWithUrl("channelUrl") { (channel, error) in
@@ -156,7 +156,7 @@ SBDOpenChannel.getWithUrl("channelUrl") { (channel, error) in
 But when you chain these actions in Combine, the code becomes much simpler and easier to read:
 
 ```swift
-SBDOpenChannel.getWithUrl(channelUrl)
+SBDOpenChannel.getWithUrl("channelUrl")
     .flatMap { channel in
         channel.enter().zip(channel.getAllMetaData())
     }
