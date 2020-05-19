@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/SendBirdCombine.svg?style=flat)](https://cocoapods.org/pods/SendBirdCombine)
 [![Platform](https://img.shields.io/cocoapods/p/SendBirdCombine.svg?style=flat)](https://cocoapods.org/pods/SendBirdCombine)
 
-`SendBirdCombine` is a Swift framework that provides [Combine](https://developer.apple.com/documentation/combine) extensions to the [SendBird SDK](https://github.com/sendbird/sendbird-ios-framework). `SendBird` is an in-app messaging platform that provides an Objective-C based iOS SDK and uses some older design patterns such as delegate-based callbacks. `SendBirdCombine` attempts to provide a modern reactive interface to the SendBird SDK for iOS using Combine, making your code easier to read and maintain.
+`SendBirdCombine` is a Swift framework that provides [Combine](https://developer.apple.com/documentation/combine) extensions to the [SendBird SDK](https://github.com/sendbird/sendbird-ios-framework). (Note: This project is not affiliated with Sendbird, Inc.) `SendBird` is an in-app messaging platform that provides an Objective-C based iOS SDK and uses some older design patterns such as delegate-based callbacks. `SendBirdCombine` attempts to provide a modern reactive interface to the SendBird SDK for iOS using Combine, making your code easier to read and maintain.
 
 ## Compatibility
 
