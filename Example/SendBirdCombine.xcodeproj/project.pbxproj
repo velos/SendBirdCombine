@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11C0EA9C25FBFD4B009AAA80 /* ChannelsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C0EA9B25FBFD4B009AAA80 /* ChannelsViewModel.swift */; };
+		11C0EAA225FC30CD009AAA80 /* ChannelsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C0EAA125FC30CD009AAA80 /* ChannelsListView.swift */; };
+		11C0EAC725FC3150009AAA80 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C0EAC625FC3150009AAA80 /* SceneDelegate.swift */; };
+		11C0EACD25FC3CF6009AAA80 /* ChannelEvent+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C0EACC25FC3CF5009AAA80 /* ChannelEvent+Extensions.swift */; };
 		43080A0E32B3E3F0E4682495 /* Pods_SendBirdCombineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1334F9D6273E396902DB55 /* Pods_SendBirdCombineTests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
-		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
+		607FACD81AFB9204008FA782 /* ChannelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ChannelsListViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -29,13 +33,17 @@
 
 /* Begin PBXFileReference section */
 		0403C6682D82453D4ABBF2F7 /* Pods-SendBirdCombineTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombineTests.release.xcconfig"; path = "Target Support Files/Pods-SendBirdCombineTests/Pods-SendBirdCombineTests.release.xcconfig"; sourceTree = "<group>"; };
+		11C0EA9B25FBFD4B009AAA80 /* ChannelsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsViewModel.swift; sourceTree = "<group>"; };
+		11C0EAA125FC30CD009AAA80 /* ChannelsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsListView.swift; sourceTree = "<group>"; };
+		11C0EAC625FC3150009AAA80 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		11C0EACC25FC3CF5009AAA80 /* ChannelEvent+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelEvent+Extensions.swift"; sourceTree = "<group>"; };
 		2A5C3857150935924C3C3186 /* Pods-SBCExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SBCExample.debug.xcconfig"; path = "Target Support Files/Pods-SBCExample/Pods-SBCExample.debug.xcconfig"; sourceTree = "<group>"; };
 		2EC1AABF57A8C2020F6B5CFE /* Pods-SendBirdCombineTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SendBirdCombineTests.debug.xcconfig"; path = "Target Support Files/Pods-SendBirdCombineTests/Pods-SendBirdCombineTests.debug.xcconfig"; sourceTree = "<group>"; };
 		34A913E57253CD1B216A3084 /* SendBirdCombine.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SendBirdCombine.podspec; path = ../SendBirdCombine.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		607FACD01AFB9204008FA782 /* SBCExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBCExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		607FACD71AFB9204008FA782 /* ChannelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsListViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -122,7 +130,11 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
-				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				11C0EAC625FC3150009AAA80 /* SceneDelegate.swift */,
+				11C0EAA125FC30CD009AAA80 /* ChannelsListView.swift */,
+				607FACD71AFB9204008FA782 /* ChannelsListViewController.swift */,
+				11C0EA9B25FBFD4B009AAA80 /* ChannelsViewModel.swift */,
+				11C0EACC25FC3CF5009AAA80 /* ChannelEvent+Extensions.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -381,7 +393,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				11C0EAC725FC3150009AAA80 /* SceneDelegate.swift in Sources */,
+				11C0EAA225FC30CD009AAA80 /* ChannelsListView.swift in Sources */,
+				11C0EACD25FC3CF6009AAA80 /* ChannelEvent+Extensions.swift in Sources */,
+				11C0EA9C25FBFD4B009AAA80 /* ChannelsViewModel.swift in Sources */,
+				607FACD81AFB9204008FA782 /* ChannelsListViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
