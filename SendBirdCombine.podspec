@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SendBirdCombine'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'Provides Combine extensions for the SendBird chat service SDK'
 
   s.description      = <<-DESC
@@ -24,18 +24,21 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
 
+  # This line is necessary until the SendBird SDK adds support for arm64 on macOS.
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+
   s.subspec 'Messages' do |m|
       m.source_files = 'SendBirdCombine/Classes/Messages/**/*'
   end
 
   s.subspec 'Calls' do |c|
     c.dependency 'SendBirdCombine/Messages'
-    c.dependency 'SendBirdCalls'
+    c.dependency 'SendBirdCalls', '~> 1.5.4'
     c.source_files = 'SendBirdCombine/Classes/Calls/**/*'
   end
 
   s.default_subspec = 'Messages'
 
   s.frameworks = 'Combine'
-  s.dependency 'SendBirdSDK', '~> 3.0'
+  s.dependency 'SendBirdSDK', '~> 3.0.218'
 end

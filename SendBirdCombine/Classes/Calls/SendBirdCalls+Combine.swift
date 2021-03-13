@@ -53,7 +53,7 @@ extension SendBirdCall {
 
     public static func deauthenticate(voipPushToken: Data?) -> AnyPublisher<Void, SBCError> {
         Future<Void, SBCError> { promise in
-            deauthenticate(voipPushToken: voipPushToken, completionHandler: VoidCallsResult.handle(promise: promise))
+            deauthenticate(completionHandler: VoidCallsResult.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }

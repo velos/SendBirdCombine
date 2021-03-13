@@ -477,22 +477,22 @@ extension SBDBaseChannel {
         .eraseToAnyPublisher()
     }
 
-    public func getMetaData(withKeys: [String]?) -> AnyPublisher<[String: NSObject], SBDError> {
-        Future<[String: NSObject], SBDError> { [weak self] promise in
+    public func getMetaData(withKeys: [String]?) -> AnyPublisher<[String: String], SBDError> {
+        Future<[String: String], SBDError> { [weak self] promise in
             self?.getMetaData(withKeys: withKeys, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
 
-    public func getAllMetaData() -> AnyPublisher<[String: NSObject], SBDError> {
-        Future<[String: NSObject], SBDError> { [weak self] promise in
+    public func getAllMetaData() -> AnyPublisher<[String: String], SBDError> {
+        Future<[String: String], SBDError> { [weak self] promise in
             self?.getAllMetaData(completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()
     }
 
-    public func updateMetaCounters(_ metaData: [String: String]) -> AnyPublisher<[String: NSObject], SBDError> {
-        Future<[String: NSObject], SBDError> { [weak self] promise in
+    public func updateMetaCounters(_ metaData: [String: String]) -> AnyPublisher<[String: String], SBDError> {
+        Future<[String: String], SBDError> { [weak self] promise in
             self?.updateMetaData(metaData, completionHandler: Result.handle(promise: promise))
         }
         .eraseToAnyPublisher()

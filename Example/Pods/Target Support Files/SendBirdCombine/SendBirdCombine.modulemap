@@ -1,6 +1,0 @@
-framework module SendBirdCombine {
-  umbrella header "SendBirdCombine-umbrella.h"
-
-  export *
-  module * { export * }
-}

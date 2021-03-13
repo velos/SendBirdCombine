@@ -2,7 +2,7 @@ use_frameworks!
 platform :ios, '13.0'
 
 target 'SBCExample' do
-  pod 'SendBirdCombine', :path => '../'
+  pod 'SendBirdCombine/Calls', :path => '../'
 
   target 'SendBirdCombineTests' do
     inherit! :search_paths
