@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = NavigationView {
-            ChannelsListView(viewModel: ChannelsViewModel())
+            ChannelsListView(viewModel: ChannelsViewModel(userId: "my-user"))
         }
 
         // Use a UIHostingController as window root view controller.

@@ -46,7 +46,7 @@ extension ChannelEvent {
         case .reactionUpdated(let reaction):
             return "Reaction \(reaction.key)"
         default:
-            return ""
+            return nil
         }
     }
 }

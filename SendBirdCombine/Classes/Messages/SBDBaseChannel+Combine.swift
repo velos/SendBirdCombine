@@ -699,6 +699,13 @@ extension SBDGroupChannel {
         }
         .eraseToAnyPublisher()
     }
+
+    public func leave() -> AnyPublisher<Void, SBDError> {
+        Future<Void, SBDError> { [weak self] promise in
+            self?.leave(completionHandler: VoidResult.handle(promise: promise))
+        }
+        .eraseToAnyPublisher()
+    }
 }
 
 extension SBDOpenChannel {

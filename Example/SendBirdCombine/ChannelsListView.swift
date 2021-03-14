@@ -12,19 +12,30 @@ struct ChannelsListView: View {
     @ObservedObject var viewModel: ChannelsViewModel
 
     var addButton: some View {
-        Button(action: viewModel.createChannel) {
+        Button {
+            viewModel.createChannel(with: ["other-user"])
+        } label: {
             Image(systemName: "plus.message.fill")
         }
     }
 
     var body: some View {
-        List(viewModel.channels, id: \.channelUrl) { channel in
-            VStack(alignment: .leading) {
-                Text("Channel: \(channel.name)")
-                    .font(.headline)
-                Text("\(viewModel.lastUpdate[channel.channelUrl] ?? "")")
-                    .font(.subheadline)
+        List {
+            ForEach(viewModel.channels, id: \.channelUrl) { channel in
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("\(channel.name)")
+                            .font(.headline)
+                        Text("\(viewModel.lastMessage[channel.channelUrl] ?? "")")
+                            .font(.subheadline)
+                    }
+                    Spacer()
+                    if viewModel.isTyping[channel.channelUrl] == true {
+                        Image(systemName: "ellipsis")
+                    }
+                }
             }
+            .onDelete(perform: viewModel.leaveChannel(at:))
         }
         .listStyle(PlainListStyle())
         .navigationBarTitle("My Channels", displayMode: .inline)
@@ -35,6 +46,6 @@ struct ChannelsListView: View {
 
 struct ChannelsListView_Previews: PreviewProvider {
     static var previews: some View {
-        ChannelsListView(viewModel: ChannelsViewModel())
+        ChannelsListView(viewModel: ChannelsViewModel(userId: "my-user"))
     }
 }
