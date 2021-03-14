@@ -22,20 +22,13 @@ struct ChannelsListView: View {
     var body: some View {
         List {
             ForEach(viewModel.channels, id: \.channelUrl) { channel in
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("\(channel.name)")
-                            .font(.headline)
-                        Text("\(viewModel.lastMessage[channel.channelUrl] ?? "")")
-                            .font(.subheadline)
-                    }
-                    Spacer()
-                    if viewModel.isTyping[channel.channelUrl] == true {
-                        Image(systemName: "ellipsis")
-                    }
-                }
+                ChannelRow(
+                    name: channel.name,
+                    lastMessage: viewModel.lastMessage[channel.channelUrl],
+                    isTyping: viewModel.isTyping[channel.channelUrl] == true
+                )
             }
-            .onDelete(perform: viewModel.leaveChannel(at:))
+            .onDelete(perform: viewModel.leaveChannels(at:))
         }
         .listStyle(PlainListStyle())
         .navigationBarTitle("My Channels", displayMode: .inline)
@@ -44,8 +37,37 @@ struct ChannelsListView: View {
     }
 }
 
+struct ChannelRow: View {
+
+    let name: String
+    let lastMessage: String?
+    let isTyping: Bool
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text("\(name)")
+                    .font(.headline)
+                Text("\(lastMessage ?? "")")
+                    .font(.subheadline)
+            }
+            Spacer()
+            if isTyping {
+                Image(systemName: "ellipsis")
+            }
+        }
+    }
+}
+
 struct ChannelsListView_Previews: PreviewProvider {
     static var previews: some View {
-        ChannelsListView(viewModel: ChannelsViewModel(userId: "my-user"))
+        Group {
+            ChannelsListView(viewModel: ChannelsViewModel(userId: "my-user"))
+
+            ChannelRow(name: "Test Channel", lastMessage: "last message", isTyping: true)
+            ChannelRow(name: "Test Channel", lastMessage: "last message", isTyping: false)
+            ChannelRow(name: "Test Channel", lastMessage: nil, isTyping: true)
+            ChannelRow(name: "Test Channel", lastMessage: nil, isTyping: false)
+        }
     }
 }

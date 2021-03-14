@@ -24,13 +24,13 @@ class ChannelsViewModel: ObservableObject {
     private let userId: String
     init(userId: String) {
         self.userId = userId
+        setUpChannelsBinding()
     }
 
-    func loadChannels() {
-        guard let query = SBDGroupChannel.createMyGroupChannelListQuery() else {
-            return
-        }
-
+    /// Sets up a binding so that whenever the channels Published array is updated,
+    /// eventPublishers will be subscribed for each channel so we get channel status
+    /// updates like the last message and the typing status.
+    private func setUpChannelsBinding() {
         $channels
             .map { channels in
                 Publishers.MergeMany(
@@ -41,7 +41,7 @@ class ChannelsViewModel: ObservableObject {
                     }
                 )
             }
-            .switchToLatest()
+            .switchToLatest() // ensure previous publishers are canceled
             .sink { [weak self] result in
                 let (channel, event) = result
                 if let eventString = event.eventString {
@@ -51,8 +51,17 @@ class ChannelsViewModel: ObservableObject {
                 if case .typingStatusUpdated = event {
                     self?.isTyping[channel.channelUrl] = channel.isTyping()
                 }
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
+    }
 
+    func loadChannels() {
+        guard let query = SBDGroupChannel.createMyGroupChannelListQuery() else {
+            return
+        }
+
+        // connect and load an initial page from the my channels query.
+        // assign the result to the channels array.
         connectIfNecessary()
             .flatMap { _ in query.loadNextPage() }
             .catch { _ in Just([]) }
@@ -60,6 +69,8 @@ class ChannelsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    /// Creates a distinct channel with the given user IDs and updates the channels array if successful.
+    /// - Parameter userIds: The user IDs to invite to the channel
     func createChannel(with userIds: [String]) {
         connectIfNecessary()
             .flatMap { _ in SBDGroupChannel.createChannel(with: userIds, isDistinct: true) }
@@ -82,7 +93,12 @@ class ChannelsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func leaveChannel(at indexSet: IndexSet) {
+    /// Leaves all the channels at the index in the passed in IndexSet
+    /// - Parameter indexSet: The indexes of channels which should be left
+    func leaveChannels(at indexSet: IndexSet) {
+
+        // compile a list of leave publishers, which return the success or failure as a Result
+        // so these can't fail.
         let leavePublishers = indexSet.map { index -> AnyPublisher<Result<SBDGroupChannel, SBDError>, Never> in
             let channel = channels[index]
             let publisher: AnyPublisher<Void, SBDError> = channel.leave()
@@ -98,6 +114,8 @@ class ChannelsViewModel: ObservableObject {
                 .eraseToAnyPublisher()
         }
 
+        // merge all the unfailable publishers and remove channels from the channels array for each
+        // that succeeds.
         Publishers.MergeMany(leavePublishers)
             .sink { [weak self] result in
                 switch result {
@@ -110,6 +128,8 @@ class ChannelsViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    /// Connects to SendBird if necessary and outputs the SBDUser if successful.
+    /// - Returns: A publisher which outputs the current user's SBDUser immediately if logged in, or logs and and outputs it.
     private func connectIfNecessary() -> AnyPublisher<SBDUser, SBDError> {
         guard let currentUser = SBDMain.getCurrentUser() else {
             return SBDMain.connect(userId: userId)
