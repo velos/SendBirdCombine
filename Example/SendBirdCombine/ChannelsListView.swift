@@ -43,17 +43,30 @@ struct ChannelRow: View {
     let lastMessage: String?
     let isTyping: Bool
 
+    @State private var isAnimating: Bool = false
+
+    private var typingAnimation: Animation {
+        Animation.easeInOut(duration: 1.0)
+            .repeatForever(autoreverses: true)
+    }
+
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text("\(name)")
                     .font(.headline)
                 Text("\(lastMessage ?? "")")
-                    .font(.subheadline)
+                    .font(.callout)
+                    .foregroundColor(.gray)
+                    .lineLimit(2)
             }
             Spacer()
             if isTyping {
                 Image(systemName: "ellipsis")
+                    .opacity(isAnimating ? 0.25 : 1.0)
+                    .animation(typingAnimation)
+                    .onAppear { isAnimating = true }
+                    .onDisappear { isAnimating = false }
             }
         }
     }
@@ -64,10 +77,14 @@ struct ChannelsListView_Previews: PreviewProvider {
         Group {
             ChannelsListView(viewModel: ChannelsViewModel(userId: "my-user"))
 
-            ChannelRow(name: "Test Channel", lastMessage: "last message", isTyping: true)
-            ChannelRow(name: "Test Channel", lastMessage: "last message", isTyping: false)
+            ChannelRow(name: "Test Channel", lastMessage: "A really long last message that has to probably go to two lines", isTyping: true)
+                .previewLayout(.sizeThatFits)
+            ChannelRow(name: "Test Channel", lastMessage: "A really long last message that has to probably go to two lines", isTyping: false)
+                .previewLayout(.sizeThatFits)
             ChannelRow(name: "Test Channel", lastMessage: nil, isTyping: true)
+                .previewLayout(.sizeThatFits)
             ChannelRow(name: "Test Channel", lastMessage: nil, isTyping: false)
+                .previewLayout(.sizeThatFits)
         }
     }
 }
