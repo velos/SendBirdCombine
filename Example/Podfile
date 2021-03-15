@@ -6,8 +6,5 @@ target 'SBCExample' do
 
   target 'SendBirdCombineTests' do
     inherit! :search_paths
-
-    pod 'Quick', '~> 2.2.0'
-    pod 'Nimble', '~> 8.0'
   end
 end

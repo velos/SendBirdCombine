@@ -1,6 +1,4 @@
 PODS:
-  - Nimble (8.1.2)
-  - Quick (2.2.1)
   - SendBirdCalls (1.5.4):
     - SendBirdWebRTC
   - SendBirdCombine/Calls (1.0.1):
@@ -13,14 +11,10 @@ PODS:
   - SendBirdWebRTC (1.2.0)
 
 DEPENDENCIES:
-  - Nimble (~> 8.0)
-  - Quick (~> 2.2.0)
   - SendBirdCombine/Calls (from `../`)
 
 SPEC REPOS:
   trunk:
-    - Nimble
-    - Quick
     - SendBirdCalls
     - SendBirdSDK
     - SendBirdWebRTC
@@ -30,13 +24,11 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Nimble: 3864815b4703c7ebffba875973c70e854489fbae
-  Quick: f5754d69b7013f5864c29aab9ae6f0c79c5bc200
   SendBirdCalls: 854689f5236e62476b55b538a5b86290fa8a6477
   SendBirdCombine: 4183906fe2437cb6e1ba8bee73dd709483bf6248
   SendBirdSDK: d53a448ecbc9e6c5f58a3ab0510c4295954a20ee
   SendBirdWebRTC: 7ba91b10a214ae2f1d99de28b9a70bd68d897511
 
-PODFILE CHECKSUM: a795393c87a20f14870c11631d527e083f68d996
+PODFILE CHECKSUM: 23075793745c499bef31f92843a25a30283e3405
 
 COCOAPODS: 1.10.1
