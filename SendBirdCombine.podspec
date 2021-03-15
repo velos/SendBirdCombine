@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SendBirdCombine'
-  s.version          = '1.0.1'
+  s.version          = '1.1.0'
   s.summary          = 'Provides Combine extensions for the SendBird chat service SDK'
 
   s.description      = <<-DESC
